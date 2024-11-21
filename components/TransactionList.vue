@@ -1,11 +1,30 @@
 <template>
   <div class="transaction-list">
-    <h3>Son İşlemler</h3>
+    <h3>Latest Transactions</h3>
     <div class="transactions">
-      <div v-for="tx in transactions" :key="tx._id" class="transaction-item">
-        <div class="tx-from">{{ shortenAddress(tx.from) }}</div>
-        <div class="tx-amount">{{ formatAmount(tx.amount) }}</div>
-        <div class="tx-time">{{ formatTime(tx.blockTime) }}</div>
+      <div v-for="tx in transactions"
+           :key="tx._id"
+           class="transaction-item"
+           @click="openSolscan(tx.signature)"
+           :title="'View on Solscan'">
+        <div class="tx-content">
+          <div class="tx-from">{{ shortenAddress(tx.from) }}</div>
+          <div class="tx-amount">{{ formatAmount(tx.amount) }}</div>
+        </div>
+        <div class="arrow-icon">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               width="16"
+               height="16"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2"
+               stroke-linecap="round"
+               stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </div>
       </div>
     </div>
   </div>
@@ -40,12 +59,11 @@ const formatAmount = (amount: string) => {
   return (parseInt(amount) / 1e9).toFixed(2)
 }
 
-const formatTime = (timestamp: number) => {
-  return new Date(timestamp * 1000).toLocaleTimeString()
+const openSolscan = (signature: string) => {
+  window.open(`https://solscan.io/tx/${signature}`, '_blank')
 }
 
 const processNewTransactions = (data: Transaction[]) => {
-  // İlk yüklemede sadece son 10 transaction'ı işle
   if (isFirstLoad) {
     const lastTen = data.slice(0, 10)
     emit('new-transactions', lastTen)
@@ -53,11 +71,10 @@ const processNewTransactions = (data: Transaction[]) => {
     return
   }
 
-  // Daha önce işlenmemiş transaction'ları filtrele
   const newTransactions = data.filter(tx => !props.processedIds.has(tx._id))
 
   if (newTransactions.length > 0) {
-    console.log(`${newTransactions.length} yeni transaction bulundu`)
+    console.log(`${newTransactions.length} new transactions found`)
     emit('new-transactions', newTransactions)
   }
 }
@@ -74,13 +91,11 @@ const fetchTransactions = async () => {
 
 onMounted(() => {
   fetchTransactions()
-  // Her 5 saniyede bir güncelle
   setInterval(fetchTransactions, 5000)
 })
 
-// Debug için transactions değişimini izle
 watch(transactions, (newVal) => {
-  console.log('Transactions güncellendi, toplam:', newVal.length)
+  console.log('Transactions updated, total:', newVal.length)
 })
 </script>
 
@@ -102,18 +117,57 @@ watch(transactions, (newVal) => {
 .transaction-item {
   padding: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.transaction-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tx-content {
+  flex: 1;
 }
 
 .tx-from {
   font-family: monospace;
+  color: #fff;
 }
 
 .tx-amount {
   color: #4CAF50;
+  margin-top: 4px;
 }
 
-.tx-time {
-  font-size: 0.8em;
+.arrow-icon {
+  opacity: 0;
+  transition: opacity 0.2s;
   color: #888;
+}
+
+.transaction-item:hover .arrow-icon {
+  opacity: 1;
+}
+
+/* Custom Scrollbar */
+.transaction-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.transaction-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.transaction-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.transaction-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
 </style>
