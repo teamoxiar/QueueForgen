@@ -1,11 +1,11 @@
-# FluxThread: Neural Blockchain Visualizer
+# QueueForgen: Neural Blockchain Visualizer
 
 
-FluxThread is an innovative project that visualizes blockchain transactions as synaptic connections in neural networks. Each transaction comes to life as dynamic strings, representing the connections between neurons in artificial neural networks, creating a living visualization of the blockchain's neural fabric.
+QueueForgen is an innovative project that visualizes blockchain transactions as synaptic connections in neural networks. Each transaction comes to life as dynamic strings, representing the connections between neurons in artificial neural networks, creating a living visualization of the blockchain's neural fabric.
 
 ## 🧠 Concept
 
-FluxThread merges blockchain and artificial intelligence technologies into a unique visual experience. Just as a neural network forms new synaptic connections during learning, each blockchain transaction creates a new neural pathway in our system. These strings:
+QueueForgen merges blockchain and artificial intelligence technologies into a unique visual experience. Just as a neural network forms new synaptic connections during learning, each blockchain transaction creates a new neural pathway in our system. These strings:
 
 - 💫 Gain complexity and size based on transaction magnitude
 - 🎯 Represent unique learning pathways
@@ -23,7 +23,7 @@ Our vision transforms blockchain transactions from mere data points into a visua
 
 ## 💡 Innovation
 
-FluxThread introduces a revolutionary way to understand blockchain activity by:
+QueueForgen introduces a revolutionary way to understand blockchain activity by:
 
 - Visualizing transactions as neural pathways
 - Demonstrating network growth through dynamic string formations
@@ -124,4 +124,4 @@ MIT License - feel free to use this project for learning, development, and visua
 
 ### 🌟 "Where Blockchain Meets Neural Networks"
 
-FluxThread represents the convergence of blockchain technology and neural network visualization, creating a unique window into the living, learning ecosystem of digital transactions.
+QueueForgen represents the convergence of blockchain technology and neural network visualization, creating a unique window into the living, learning ecosystem of digital transactions.
